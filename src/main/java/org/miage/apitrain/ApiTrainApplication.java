@@ -10,4 +10,16 @@ public class ApiTrainApplication {
 		SpringApplication.run(ApiTrainApplication.class, args);
 	}
 
+	/*
+
+
+	@Bean
+	public OpenAPI intervenantAPI() {
+		return new OpenAPI().info(new Info()
+				.title("Intervenant API")
+				.version("1.0")
+				.description("Documentation sommaire de API Intervenant 1.0"));
+	}
+
+	 */
 }
