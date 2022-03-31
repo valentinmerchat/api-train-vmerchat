@@ -1,5 +1,7 @@
 package org.miage.apitrain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String idReservation;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
     private Utilisateur utilisateur;
@@ -39,6 +42,4 @@ public class Reservation implements Serializable {
 
     @Column(name = "siege_fenetre")
     private boolean siegeFenetre;
-
-
 }

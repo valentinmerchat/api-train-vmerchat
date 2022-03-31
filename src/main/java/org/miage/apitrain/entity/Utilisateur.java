@@ -1,5 +1,6 @@
 package org.miage.apitrain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -12,8 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import java.io.Serializable;
 import java.util.List;
 
@@ -31,11 +32,9 @@ public class Utilisateur implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String idUtilisateur;
 
-    @Column(name = "nom_utilisateur", length=50)
+    @Column(name = "nom", length=50)
     private String nomUtilisateur;
 
     @OneToMany(mappedBy = "utilisateur")
     private List<Reservation> listReservations;
-
-
 }

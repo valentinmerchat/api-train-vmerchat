@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -36,10 +37,13 @@ public class Trajet implements Serializable {
     private String villeArrive;
 
     @Column(name = "date_depart")
-    private String dateDepart;
+    private LocalDateTime dateDepart;
 
     @Column(name = "date_arrivee")
-    private String dateArrive;
+    private LocalDateTime dateArrive;
+
+    @Column(name = "prix")
+    private double prix;
 
     @Column(name = "nb_places_fenetres")
     private int nbPlacesFenetres;
