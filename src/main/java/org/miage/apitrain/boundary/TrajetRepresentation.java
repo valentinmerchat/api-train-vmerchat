@@ -1,5 +1,6 @@
 package org.miage.apitrain.boundary;
 
+import org.miage.apitrain.assembler.TrajetAssembler;
 import org.miage.apitrain.entity.Trajet;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -17,27 +18,27 @@ import java.util.Optional;
 public class TrajetRepresentation {
 
     private final TrajetResource tr;
-    //private final TrajetAssembler ta;
+    private final TrajetAssembler ta;
     //private final TrajetValidator tv;
 
-    public TrajetRepresentation(TrajetResource tr) {
+    public TrajetRepresentation(TrajetResource tr, TrajetAssembler ta) {
         this.tr = tr;
-        //this.ta = ta;
+        this.ta = ta;
         //this.tv = tv;
     }
 
     @GetMapping
     public ResponseEntity<?> getAllTrajets() {
-        return ResponseEntity.ok(tr.findAll());
+        return ResponseEntity.ok(ta.toCollectionModel(tr.findAll()));
     }
 
     @GetMapping(value="/{trajetId}")
     public ResponseEntity<?> getOneTrajet(@PathVariable("trajetId") String id) {
         return Optional.ofNullable(tr.findById(id)).filter(Optional::isPresent)
-                .map(i -> ResponseEntity.ok(i.get()))
+                .map(i -> ResponseEntity.ok(ta.toModel(i.get())))
                 .orElse(ResponseEntity.notFound().build());
     }
-
+ /*
     @GetMapping(value="/{villeA}/{villeB}")
     public ResponseEntity<?> getOneTrajet(@PathVariable("villeA") String villeA,
                                           @PathVariable("villeB") String villeB) {
@@ -45,9 +46,9 @@ public class TrajetRepresentation {
 
 
 
-       /* return Optional.ofNullable(tr.findById(id)).filter(Optional::isPresent)
+       return Optional.ofNullable(tr.findById(id)).filter(Optional::isPresent)
                 .map(i -> ResponseEntity.ok(i.get()))
-                .orElse(ResponseEntity.notFound().build());*/
+                .orElse(ResponseEntity.notFound().build());
     }
-
+*/
 }
