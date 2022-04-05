@@ -22,16 +22,21 @@ public class UtilisateurAssembler implements RepresentationModelAssembler<Utilis
         EntityModel<Utilisateur> utilisateurEntityModel = EntityModel.of(utilisateur);
         utilisateurEntityModel.add(linkTo(methodOn(UtilisateurRepresentation.class).getOneUtilisateur(utilisateur.getIdUtilisateur())).withSelfRel());
         utilisateurEntityModel.add(linkTo(methodOn(UtilisateurRepresentation.class).getAllUtilisateurs()).withRel("collection"));
+        utilisateurEntityModel.add(linkTo(methodOn(UtilisateurRepresentation.class).getOneUtilisateurReservations(utilisateur.getIdUtilisateur())).withRel("utilReservations"));
         return utilisateurEntityModel;
     }
 
+
+    @Override
     public CollectionModel<EntityModel<Utilisateur>> toCollectionModel(Iterable<? extends Utilisateur> entities) {
-        List<EntityModel<Utilisateur>> clientModel = StreamSupport
+        List<EntityModel<Utilisateur>> utilisateurModel = StreamSupport
                 .stream(entities.spliterator(), false)
                 .map(i -> toModel(i))
                 .collect(Collectors.toList());
-        return CollectionModel.of(clientModel,
+        return CollectionModel.of(utilisateurModel,
                 linkTo(methodOn(UtilisateurRepresentation.class)
                         .getAllUtilisateurs()).withSelfRel());
     }
+
+
 }

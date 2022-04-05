@@ -1,4 +1,4 @@
-package org.miage.apitrain;
+package org.miage.apitrain.entity;
 
 public enum EtatReservation {
     Confirme,

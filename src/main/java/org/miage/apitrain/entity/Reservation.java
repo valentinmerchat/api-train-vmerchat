@@ -1,13 +1,11 @@
 package org.miage.apitrain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import org.miage.apitrain.EtatReservation;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,13 +22,13 @@ public class Reservation implements Serializable {
 
     @Id
     @Column(name = "id_reservation")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idReservation;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_utilisateur")
-    private Utilisateur utilisateur;
+    private Utilisateur idutil;
 
     @ManyToOne
     @JoinColumn(name = "id_trajet")

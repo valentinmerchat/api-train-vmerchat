@@ -29,12 +29,12 @@ public class Utilisateur implements Serializable {
 
     @Id
     @Column(name = "id_utilisateur", length=50)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String idUtilisateur;
 
     @Column(name = "nom", length=50)
     private String nomUtilisateur;
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "idutil")
     private List<Reservation> listReservations;
 }

@@ -27,20 +27,20 @@ public class Trajet implements Serializable {
 
     @Id
     @Column(name = "id_trajet")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(name = "ville_depart")
     private String villeDepart;
 
     @Column(name = "ville_arrivee")
-    private String villeArrive;
+    private String villeArrivee;
 
     @Column(name = "date_depart")
     private LocalDateTime dateDepart;
 
     @Column(name = "date_arrivee")
-    private LocalDateTime dateArrive;
+    private LocalDateTime dateArrivee;
 
     @Column(name = "prix")
     private double prix;
