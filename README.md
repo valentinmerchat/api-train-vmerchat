@@ -2,7 +2,7 @@
 
 ## Descriptif :
 
-Ce projet consiste à la création d'une API métier permettant la gestion des réservations de trajets entre des villes de départ de d'arrivées pour les utilisateurs.
+Ce projet consiste à la création d'une API métier permettant la gestion des réservations de trajets entre des villes de départ et d'arrivée pour les utilisateurs.
 
 ## Choix de conception
 
@@ -51,7 +51,7 @@ Le CommandLineRunner se trouve dans le fichier ApiTrainApplication.
 
 ## Les différentes chemins :
 
-#### Chemin principal :
+### Chemin principal :
 
 - **localhost:8082/**
 
@@ -91,7 +91,7 @@ En effet, en sélectionnant en fonction de la date et du temps comme je faisais 
 - [DELETE] **/reservations/{utilisateurId}**  : ce chemin permet de supprimer une réservation de la base de données à partir de son identifiant (à condition qu'elle n'est pas était confirmé ou payé par l'utilisateur)
 - [PATCH] **/reservations/{utilisateurId}** : ce chemin permet de modifier l'état d'une réservation de "En Attente" à "Confirmé" par l'utilisateur
 
-
+/!\ Pour le post, delete et patch, passer par swagger.
 
 
 
