@@ -6,6 +6,8 @@ Ce projet consiste à la création d'une API métier permettant la gestion des r
 
 ## Choix de conception
 
+### Définition des entités 
+
 J'ai décidé de créer 3 entities :
 
 - Utilisateur : représente l'utilisateur qui va effectuer des opération de selection, recherche, etc. sur le service de réservation
@@ -13,6 +15,18 @@ J'ai décidé de créer 3 entities :
 - Reservation : représente une réservation attribué à un utilisateur donné pour un trajet donné.
 
 Concernant le train, je n'ai pas eu besoin de le modéliser sous forme d'entity car un trajet représente implicitement un train pour lequel il y aurait une ville de départ et une ville d'arrivée définie.
+
+### Descriptif entités 
+
+Utilisateur :
+- nom :
+- listReservations :
+
+Trajet :
+-
+
+Reservation :
+-
 
 ## Descriptif des entities
 
@@ -69,7 +83,10 @@ Trajet :
 Reservation :
 
 - **/reservations** : ce chemin retourne la liste des réservations
+- [POST] **/reservations** : ce chemin permet de créer une nouvelle réservation
 - **/reservations/{utilisateurId}** : ce chemin retourne une réservation à partir d'un identifiant
+- [DELETE] **/reservations/{utilisateurId}**  : ce chemin permet de supprimer une réservation de la base de données à partir de son identifiant
+- [PATCH] **/reservations/{utilisateurId}** : ce chemin permet de modifier l'état d'une réservation de "En Attente" à "Confirmé" par l'utilisateur
 
 
 Swagger documentation :
@@ -79,5 +96,5 @@ Swagger documentation :
 
 ## Données
 
-Pour les données dans la base de données h2, j'utilise un CommandLineRunner qui va permettre de créer les objets qui seront ensuite mapper dans la base de données.
+Pour le stockage des données, j'ai décidé de créer une base de données h2. Pour peupler la base de données, j'utilise un CommandLineRunner qui va permettre de créer les objets qui seront ensuite mapper dans la base de données.
 
