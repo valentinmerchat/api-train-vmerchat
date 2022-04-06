@@ -2,6 +2,7 @@ package org.miage.apitrain.boundary;
 
 import org.miage.apitrain.assembler.ReservationAssembler;
 import org.miage.apitrain.entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +25,8 @@ public class ReservationRepresentation {
     private final ReservationAssembler ra;
     private final UtilisateurResource ur;
     private final TrajetResource tr;
+    @Autowired
+    CompteDelegate compteDelegate;
 
     public ReservationRepresentation(ReservationResource rr, ReservationAssembler ra, UtilisateurResource ur, TrajetResource tr) {
         this.rr = rr;
@@ -70,7 +74,7 @@ public class ReservationRepresentation {
 
     @DeleteMapping(value = "/{reservationId}")
     @Transactional
-    public ResponseEntity<?> deleteOneReservation(@PathVariable("utilisateurId") String idReservation) {
+    public ResponseEntity<?> deleteOneReservation(@PathVariable("reservationId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);
         if (reservation.isPresent() && reservation.get().getEtatReservation() == EtatReservation.Attente) {
             rr.delete(reservation.get());
@@ -80,7 +84,7 @@ public class ReservationRepresentation {
 
     @PatchMapping(value = "/{reservationId}")
     @Transactional
-    public ResponseEntity<?> confirmOneReservation(@PathVariable("utilisateurId") String idReservation) {
+    public ResponseEntity<?> confirmOneReservation(@PathVariable("reservationId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);
         if (reservation.isPresent() && reservation.get().getEtatReservation() == EtatReservation.Attente) {
             reservation.get().setEtatReservation(EtatReservation.Confirme);
@@ -88,6 +92,27 @@ public class ReservationRepresentation {
             return ResponseEntity.ok(saved);
         }
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping(value = "/{reservationId}/pay")
+    @Transactional
+    public ResponseEntity<?> payOneReservation(@PathVariable("reservationId") String idReservation) throws URISyntaxException {
+        Optional<Reservation> reservation = rr.findById(idReservation);
+
+        if(reservation.isEmpty() && (reservation.get().getEtatReservation() == EtatReservation.Attente || reservation.get().getEtatReservation() == EtatReservation.Paye)){
+            return ResponseEntity.noContent().build();
+        }
+
+        Reservation res = reservation.get();
+
+        ResponseEntity<String> rep = compteDelegate.appelRetirerMontant(res.getIdutil().getIdUtilisateur());
+
+
+        reservation.get().setEtatReservation(EtatReservation.Paye);
+        Reservation saved = rr.save(reservation.get());
+        return ResponseEntity.ok(saved);
+
     }
 }
 

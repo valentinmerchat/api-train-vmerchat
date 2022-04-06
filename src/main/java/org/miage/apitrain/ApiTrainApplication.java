@@ -11,6 +11,7 @@ import org.miage.apitrain.entity.Utilisateur;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @Slf4j
 public class ApiTrainApplication {
 
