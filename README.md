@@ -53,7 +53,7 @@ Le CommandLineRunner se trouve dans le fichier ApiTrainApplication.
 
 #### Chemin principal :
 
-- **http://localhost:8082/**
+- **localhost:8082/**
 
 ### Chemin vers la base de données :
 
@@ -62,8 +62,7 @@ Le CommandLineRunner se trouve dans le fichier ApiTrainApplication.
 
 ### Swagger documentation :
 
-- **http://127.0.0.1:8082/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config**
--
+- **localhost:8082/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config**:
 
 ### Utilisateur :
 
@@ -79,9 +78,9 @@ Le CommandLineRunner se trouve dans le fichier ApiTrainApplication.
 - **/trajets/{villeDepart}/{villeArrivee}/{date}/{fenetre}/{trier}** : ce chemin retourne la liste des trajets en fonction de la ville de départ, la ville d'arrivée, pour une date donnée, côté couloir ou fenêtre et triée en fonction du prix si voulu 
 (Exemple à tester : **/trajets/nancy/metz/2022-03-30T09:15:00/true/true)
 
-[Remarques :]
+Remarques :
 
-Pour ****/trajets/{villeDepart}/{villeArrivee}/{date}/{fenetre}/{trier}**, j'ai décidé d'afficher les trajets en fonction de la journée renseignée et sur un interval de temps égal à 1 heure autour de la date renseignée car même s'il n'y a pas un trajet à l'instant t donné, il peut y en avoir un sur un interval de minutes.
+Pour **/trajets/{villeDepart}/{villeArrivee}/{date}/{fenetre}/{trier}**, j'ai décidé d'afficher les trajets en fonction de la journée renseignée et sur un interval de temps égal à 1 heure autour de la date renseignée car même s'il n'y a pas un trajet à l'instant t donné, il peut y en avoir un sur un interval de minutes.
 En effet, en sélectionnant en fonction de la date et du temps comme je faisais auparavant, j'ai remarqué qu'il serait vraiment difficile à l'utilisateur de trouver un trajet à une précise, j'ai donc décidé de faire comme ceci.
 
 ### Reservation :
