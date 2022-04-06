@@ -68,7 +68,7 @@ public class ReservationRepresentation {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping(value = "/{utilisateurId}")
+    @DeleteMapping(value = "/{reservationId}")
     @Transactional
     public ResponseEntity<?> deleteOneReservation(@PathVariable("utilisateurId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);
@@ -78,7 +78,7 @@ public class ReservationRepresentation {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping(value = "/{utilisateurId}")
+    @PatchMapping(value = "/{reservationId}")
     @Transactional
     public ResponseEntity<?> confirmOneReservation(@PathVariable("utilisateurId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);
