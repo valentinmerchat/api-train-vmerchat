@@ -4,7 +4,9 @@ import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.miage.apitrain.entity.TrajetResource;
+import org.miage.apitrain.boundary.ReservationResource;
+import org.miage.apitrain.boundary.TrajetResource;
+import org.miage.apitrain.boundary.TrajetResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -22,8 +24,12 @@ public class TrajetTests {
     @Autowired
     TrajetResource tr;
 
+    @Autowired
+    ReservationResource rr;
+
     @BeforeEach
     public void setupContext() {
+        rr.deleteAll();
         tr.deleteAll();
         RestAssured.port = port;
     }

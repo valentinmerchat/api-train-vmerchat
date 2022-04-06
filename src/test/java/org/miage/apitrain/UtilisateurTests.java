@@ -37,8 +37,8 @@ public class UtilisateurTests {
 
     @BeforeEach
     public void setupContext() {
-        ur.deleteAll();
         rr.deleteAll();
+        ur.deleteAll();
         RestAssured.port = port;
     }
 
@@ -50,7 +50,7 @@ public class UtilisateurTests {
     @Test
     public void getOneUtilisateur() {
         Utilisateur util = new Utilisateur(UUID.randomUUID().toString(), "Chloe", new ArrayList<Reservation>());
-        ur.save(util);
+        util = ur.save(util);
         Response response = when().get("/utilisateurs/"+util.getIdUtilisateur())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
