@@ -49,6 +49,20 @@ Concernant le train, je n'ai pas eu besoin de le modéliser sous forme d'entity 
 Pour le stockage des données, j'ai décidé de créer une base de données h2. Pour peupler la base de données, j'utilise un CommandLineRunner qui va permettre de créer les objets qui seront ensuite mapper dans la base de données.
 Le CommandLineRunner se trouve dans le fichier ApiTrainApplication.
 
+## Consul
+
+Pour démarrer docker, utiliser la commande ci-dessous :
+
+_docker run -d --name consul -p 8500:8500 consul_
+
+Ensuite, il faudra générer les packages puis, lancez les deux projets.
+
+Verifiez que les deux API sont biens sur : http://localhost:8500/ui/dc1/services
+
+Lancez swagger : localhost:8082/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
+
+Faire une requête sur une réservation dont l'Etat est "Confirme" pour voir son etat passer à "Payer"
+
 ## Les différentes chemins :
 
 ### Chemin principal :
