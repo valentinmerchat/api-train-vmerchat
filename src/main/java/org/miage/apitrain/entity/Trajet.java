@@ -50,5 +50,4 @@ public class Trajet implements Serializable {
 
     @Column(name = "nb_places_couloirs")
     private int nbPlacesCouloirs;
-
 }

@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Bean;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
-import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,7 +71,14 @@ public class ApiTrainApplication {
 			trajetResource.save(trajet7);
 			Trajet trajet8 = new Trajet("8", "nancy", "metz", LocalDateTime.parse("2022-03-30T12:00:00"), LocalDateTime.parse("2022-03-30T10:15:00"), 10.50, 0, 0);
 			trajetResource.save(trajet8);
-
+			Trajet trajet9 = new Trajet("9", "nancy", "metz", LocalDateTime.parse("2022-03-30T10:00:00"), LocalDateTime.parse("2022-03-30T11:00:00"), 10.50, 50, 50);
+			trajetResource.save(trajet9);
+			Trajet trajet10 = new Trajet("10", "nancy", "metz", LocalDateTime.parse("2022-03-30T10:10:00"), LocalDateTime.parse("2022-03-30T10:40:00"), 9.50, 31, 24);
+			trajetResource.save(trajet10);
+			Trajet trajet11 = new Trajet("11", "nancy", "metz", LocalDateTime.parse("2022-03-30T09:30:00"), LocalDateTime.parse("2022-03-30T10:00:00"), 8.25, 0, 40);
+			trajetResource.save(trajet11);
+			Trajet trajet12 = new Trajet("12", "nancy", "metz", LocalDateTime.parse("2022-03-30T19:30:00"), LocalDateTime.parse("2022-03-30T20:30:00"), 4.50, 3, 0);
+			trajetResource.save(trajet12);
 
 			Reservation res1 = new Reservation("1", util1, trajet1, EtatReservation.Paye, true);
 			reservationResource.save(res1);

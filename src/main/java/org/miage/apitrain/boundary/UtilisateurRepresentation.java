@@ -1,12 +1,9 @@
 package org.miage.apitrain.boundary;
 
-import org.apache.tomcat.jni.Local;
 import org.miage.apitrain.assembler.ReservationAssembler;
 import org.miage.apitrain.assembler.UtilisateurAssembler;
 import org.miage.apitrain.entity.Reservation;
 import org.miage.apitrain.entity.Utilisateur;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +25,6 @@ public class UtilisateurRepresentation {
     private final UtilisateurAssembler ua;
     private final ReservationResource rr;
     private final ReservationAssembler ra;
-    //private final TrajetRepresentation tre;
     private final TrajetResource tr;
 
     public UtilisateurRepresentation(UtilisateurResource ur, UtilisateurAssembler ua,TrajetResource tr, ReservationResource rr, ReservationAssembler ra) {
@@ -60,8 +55,6 @@ public class UtilisateurRepresentation {
         if(util.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        System.out.println(util.get().getNomUtilisateur());
 
         //On sélectionne et vérifie si la liste des réservations de utilisateur existe
         List<Reservation> listRes = rr.findAllByidutil(util.get());

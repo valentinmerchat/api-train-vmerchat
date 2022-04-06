@@ -6,7 +6,6 @@ import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
@@ -69,7 +68,7 @@ public class ReservationRepresentation {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping(value = "/{utilisateurId}/delete")
+    @DeleteMapping(value = "/{utilisateurId}")
     @Transactional
     public ResponseEntity<?> deleteOneReservation(@PathVariable("utilisateurId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);
@@ -79,7 +78,7 @@ public class ReservationRepresentation {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping(value = "/{utilisateurId}/confirm")
+    @PatchMapping(value = "/{utilisateurId}")
     @Transactional
     public ResponseEntity<?> confirmOneReservation(@PathVariable("utilisateurId") String idReservation) {
         Optional<Reservation> reservation = rr.findById(idReservation);

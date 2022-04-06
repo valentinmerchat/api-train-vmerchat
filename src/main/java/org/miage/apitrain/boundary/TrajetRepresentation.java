@@ -7,10 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,12 +22,10 @@ public class TrajetRepresentation {
 
     private final TrajetResource tr;
     private final TrajetAssembler ta;
-    //private final TrajetValidator tv;
 
     public TrajetRepresentation(TrajetResource tr, TrajetAssembler ta) {
         this.tr = tr;
         this.ta = ta;
-        //this.tv = tv;
     }
 
     @GetMapping
@@ -42,35 +40,49 @@ public class TrajetRepresentation {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value="/{villeDepart}/{villeArrivee}/{date}")
+    @GetMapping(value="/{villeDepart}/{villeArrivee}/{date}/{fenetre}/{trier}")
     public ResponseEntity<?> getAllTrajetsParVilleDepartEtVilleArrivee(@PathVariable("villeDepart") String villeA,
                                                                        @PathVariable("villeArrivee") String villeB,
-                                                                       @PathVariable("date")String date) {
+                                                                       @PathVariable("date")String date,
+                                                                       @PathVariable("fenetre") boolean fenetre,
+                                                                       @PathVariable("trier") boolean trier){
 
-        System.out.println(date);
         //On regarde si le format de la date passer dans l'uri est le bon
         try{
-            System.out.println(LocalDateTime.parse(date));
+            LocalDateTime.parse(date);
         }
         catch (DateTimeParseException e){
             System.out.println(e.getMessage());
         }
 
-        //On récupère les trajets qui ont villeDepart , villeArrivee et pour lesquels la daté équivaut à la date renseigné en paramètre
-        List<Trajet> trajets = tr.findAllByVilleDepartAndVilleArriveeAndDateDepart(villeA.toLowerCase(), villeB.toLowerCase(), LocalDateTime.parse(date));
+        //On stocke la date en final car il ne faut surtout pas qu'elle soit modifier dans l'opération
+        final LocalDateTime dateTrajet = LocalDateTime.parse(date);
 
-        //Si vide on retourne une structure vide sur localhost
+        //On récupère les trajets qui ont villeDepart , villeArrivee
+        List<Trajet> trajets = tr.findAllByVilleDepartAndVilleArrivee(villeA.toLowerCase(), villeB.toLowerCase());
+
+        //Si vide on retourne une structure JSON vide sur localhost
         if(trajets.isEmpty())
             return ResponseEntity.ok(ta.toCollectionModel(new ArrayList<Trajet>()));
 
         List<Trajet> trajetsValides = new ArrayList<Trajet>();
 
-        for (Trajet t: trajets) {
-            if (t.getNbPlacesFenetres() > 0 && t.getNbPlacesCouloirs() > 0){
-                trajetsValides.add(t);
-            }
-        }
+
+        trajetsValides = trajets.stream().filter(i -> {
+            LocalDateTime uneHeureAvant = dateTrajet.minusHours(1);
+            LocalDateTime uneHeureApres = dateTrajet.plusHours(1);
+            boolean dateCondition = i.getDateDepart().isAfter(uneHeureAvant) && i.getDateDepart().isBefore(uneHeureApres);
+            boolean emplacementCondition = (fenetre && i.getNbPlacesFenetres() > 0) || (!fenetre && i.getNbPlacesCouloirs() > 0);
+            return dateCondition && emplacementCondition;
+        }).collect(Collectors.toList());
+
+
+        if(trier)
+            trajetsValides.sort(Comparator.comparing(Trajet::getPrix));
 
         return ResponseEntity.ok(ta.toCollectionModel(trajetsValides));
     }
+
+
+
 }
